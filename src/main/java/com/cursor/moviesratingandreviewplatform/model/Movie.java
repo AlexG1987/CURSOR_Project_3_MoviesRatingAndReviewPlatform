@@ -3,6 +3,8 @@ package com.cursor.moviesratingandreviewplatform.model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
+import java.util.List;
+
 @Data
 public class Movie {
 
@@ -18,5 +20,7 @@ public class Movie {
     private String Description;
 
     private Rate rate;
+
+    private List<Review> reviewList;
 
 }

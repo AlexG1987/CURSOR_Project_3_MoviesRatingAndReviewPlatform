@@ -1,29 +1,27 @@
 package com.cursor.moviesratingandreviewplatform.controller;
 
-import com.cursor.moviesratingandreviewplatform.model.Movie;
-import com.cursor.moviesratingandreviewplatform.model.Rate;
-import com.cursor.moviesratingandreviewplatform.service.impl.RateServiceImpl;
+import com.cursor.moviesratingandreviewplatform.model.Review;
+import com.cursor.moviesratingandreviewplatform.service.impl.ReviewServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class RateController {
+public class ReviewController {
 
-    private final RateServiceImpl rateService;
+    private final ReviewServiceImpl reviewService;
 
-    @PostMapping("/movie/rate/{id}")
-    public ResponseEntity addRateToMovie(@PathVariable(name = "id") Long id, @RequestBody Rate rate) {
-        rateService.addRateToMovie(id, rate);
+    @PutMapping("/review/movie/{id}")
+    public ResponseEntity addReview(@RequestBody Review review, @PathVariable(name = "id") Long id) {
+        reviewService.addReviewToMovie(id, review);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .build();
     }
-
 
 }

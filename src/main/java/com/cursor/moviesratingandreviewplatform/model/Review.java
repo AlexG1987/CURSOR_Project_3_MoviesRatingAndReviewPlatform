@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Review {
 
-    private long movie_id;
+    private long movieId;
 
-    private String review_message;
+    private String reviewMessage;
 
     private boolean like;
 
