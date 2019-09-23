@@ -5,10 +5,9 @@ import com.cursor.moviesratingandreviewplatform.service.impl.ReviewServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +21,20 @@ public class ReviewController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .build();
+    }
+
+    @PatchMapping("/review/movie/{id}")
+    public ResponseEntity editMovie(@PathVariable(name = "id") Long id, @RequestBody Review review) {
+        reviewService.updateReview(id, review);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
+    @ResponseBody
+    @GetMapping("/review/movie/{id}")
+    public List<Review> findAllByMovieId(@RequestParam(name = "id") Long id) {
+        return reviewService.findAllByMovieId(id);
     }
 
 }

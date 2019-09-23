@@ -1,7 +1,8 @@
 package com.cursor.moviesratingandreviewplatform.controller;
 
+import com.cursor.moviesratingandreviewplatform.dto.MovieDto;
 import com.cursor.moviesratingandreviewplatform.enums.Category;
-import com.cursor.moviesratingandreviewplatform.model.Movie;
+import com.cursor.moviesratingandreviewplatform.model.Rate;
 import com.cursor.moviesratingandreviewplatform.service.impl.MovieServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class MovieController {
     private final MovieServiceImpl movieService;
 
     @PostMapping("/admin/movie")
-    public ResponseEntity addMovie(@RequestBody Movie movie) {
+    public ResponseEntity addMovie(@RequestBody MovieDto movie) {
         movieService.addMovie(movie);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -33,9 +34,16 @@ public class MovieController {
                 .build();
     }
 
+    @PatchMapping("/movie/{id}")
+    public ResponseEntity addRateToMovie(@PathVariable(name = "id") Long id, @RequestBody Rate rate) {
+        movieService.addRateToMovie(id, rate);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 
     @PatchMapping("/admin/movie/{id}")
-    public ResponseEntity editTrip(@PathVariable(name = "id") Long id, @RequestBody Movie newMovie) {
+    public ResponseEntity editMovie(@PathVariable(name = "id") Long id, @RequestBody MovieDto newMovie) {
         movieService.updateMovie(id, newMovie);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -44,25 +52,25 @@ public class MovieController {
 
     @ResponseBody
     @GetMapping("/movie/{id}")
-    public Optional<Movie> getMovieById(@PathVariable(name = "id") Long id) {
+    public Optional<MovieDto> getMovieById(@PathVariable(name = "id") Long id) {
         return movieService.getMovieById(id);
     }
 
     @ResponseBody
     @GetMapping("/movie/all")
-    public List<Movie> getAllMovies() {
+    public List<MovieDto> getAllMovies() {
         return movieService.getAllMovies();
     }
 
     @ResponseBody
-    @GetMapping("/stats/{sort}")
-    public List<Movie> getMovieByRating(@PathVariable(name = "sort") Boolean sort) {
-        return movieService.getAllMoviesByRate(sort);
+    @GetMapping("/stats/rate")
+    public List<MovieDto> getMovieByRating() {
+        return movieService.getAllMoviesByRate();
     }
 
     @ResponseBody
     @GetMapping("/stats/{category}")
-    public List<Movie> getMovieByCategory(@PathVariable(name = "category") Category category) {
+    public List<MovieDto> getMovieByCategory(@PathVariable(name = "category") Category category) {
         return movieService.getMoviesByCategory(category);
     }
 

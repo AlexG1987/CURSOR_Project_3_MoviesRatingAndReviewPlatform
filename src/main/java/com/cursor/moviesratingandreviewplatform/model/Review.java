@@ -5,10 +5,12 @@ import lombok.Data;
 @Data
 public class Review {
 
+    private long id;
+
     private long movieId;
 
     private String reviewMessage;
 
-    private boolean like;
+    private boolean isLiked;
 
 }

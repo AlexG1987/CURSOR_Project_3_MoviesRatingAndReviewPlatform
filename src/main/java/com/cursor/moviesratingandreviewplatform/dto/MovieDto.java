@@ -1,10 +1,12 @@
-package com.cursor.moviesratingandreviewplatform.model;
+package com.cursor.moviesratingandreviewplatform.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 @Data
-public class Movie {
+@NoArgsConstructor
+public class MovieDto {
 
     @Id
     private long id;
@@ -17,6 +19,6 @@ public class Movie {
 
     private String shortDescription;
 
-    private Rate rate;
+    private int rateValue;
 
 }

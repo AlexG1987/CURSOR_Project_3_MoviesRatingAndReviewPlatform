@@ -1,7 +1,9 @@
 package com.cursor.moviesratingandreviewplatform.service;
 
+import com.cursor.moviesratingandreviewplatform.dto.MovieDto;
 import com.cursor.moviesratingandreviewplatform.enums.Category;
 import com.cursor.moviesratingandreviewplatform.model.Movie;
+import com.cursor.moviesratingandreviewplatform.model.Rate;
 import com.cursor.moviesratingandreviewplatform.model.Review;
 
 import java.util.List;
@@ -9,20 +11,22 @@ import java.util.Optional;
 
 public interface MovieService {
 
-    void addMovie(Movie movie);
+    void addMovie(MovieDto movie);
 
-    Optional<Movie> getMovieById(Long movieId);
+    Optional<MovieDto> getMovieById(Long movieId);
 
     void deleteMovieById(Long movieId);
 
-    void updateMovie(Long movieId, Movie updatedMovie);
+    MovieDto updateMovie(Long movieId, MovieDto updatedMovie);
+
+    Movie addRateToMovie(Long movieId, Rate rate);
 
     Movie addReviewToMovie(Long movieId, Review review);
 
-    List<Movie> getAllMovies();
+    List<MovieDto> getAllMovies();
 
-    List<Movie> getAllMoviesByRate(boolean hiLo);
+    List<MovieDto> getAllMoviesByRate();
 
-    List<Movie> getMoviesByCategory(Category category);
+    List<MovieDto> getMoviesByCategory(Category category);
 
 }

@@ -1,16 +1,16 @@
 package com.cursor.moviesratingandreviewplatform.repository;
 
+import com.cursor.moviesratingandreviewplatform.dto.MovieDto;
 import com.cursor.moviesratingandreviewplatform.enums.Category;
-import com.cursor.moviesratingandreviewplatform.model.Movie;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface MovieRepo extends MongoRepository<Movie, Long> {
+public interface MovieRepo extends MongoRepository<MovieDto, Long> {
 
-    List<Movie> findAllByRate();
+    List<MovieDto> findAllByRateValue();
 
-    List<Movie> findAllByCategory(Category category);
+    List<MovieDto> findAllByCategory(Category category);
 
 
 
