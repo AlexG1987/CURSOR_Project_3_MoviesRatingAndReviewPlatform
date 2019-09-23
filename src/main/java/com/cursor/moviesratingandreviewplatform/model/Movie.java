@@ -17,6 +17,8 @@ public class Movie {
 
     private String shortDescription;
 
+    private int rateValue;
+
     private Rate rate;
 
 }
