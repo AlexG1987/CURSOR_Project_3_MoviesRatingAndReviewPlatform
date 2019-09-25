@@ -1,5 +1,6 @@
 package com.cursor.moviesratingandreviewplatform.controller;
 
+import com.cursor.moviesratingandreviewplatform.dto.MovieWithReviewDTO;
 import com.cursor.moviesratingandreviewplatform.enums.Category;
 import com.cursor.moviesratingandreviewplatform.model.Movie;
 import com.cursor.moviesratingandreviewplatform.model.Rate;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,7 +42,7 @@ public class MovieController {
                 .build();
     }
 
-    @PatchMapping("/admin/movie/{id}")
+    @PutMapping("/admin/movie/{id}")
     public ResponseEntity editMovie(@PathVariable(name = "id") Long id, @RequestBody Movie newMovie) {
         movieService.updateMovie(id, newMovie);
         return ResponseEntity
@@ -52,8 +52,8 @@ public class MovieController {
 
     @ResponseBody
     @GetMapping("/movie/{id}")
-    public Optional<Movie> getMovieById(@PathVariable(name = "id") Long id) {
-        return movieService.getMovieById(id);
+    public MovieWithReviewDTO getMovieWithReviews(@PathVariable(name = "id") Long id) {
+        return movieService.getMovieWithReviews(id);
     }
 
     @ResponseBody
@@ -63,9 +63,9 @@ public class MovieController {
     }
 
     @ResponseBody
-    @GetMapping("/stats/rate")
-    public List<Movie> getMovieByRating() {
-        return movieService.getAllMoviesByRate();
+    @GetMapping("/stats/rate/{desc}")
+    public List<Movie> getMovieByRating(@PathVariable(name = "desc") boolean desc) {
+        return movieService.getAllMoviesByRate(desc);
     }
 
     @ResponseBody

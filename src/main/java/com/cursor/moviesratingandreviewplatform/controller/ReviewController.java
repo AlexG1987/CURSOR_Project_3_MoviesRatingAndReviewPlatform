@@ -10,20 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewServiceImpl reviewService;
 
-    @PutMapping("/review/movie/{id}")
-    public ResponseEntity addReview(@RequestBody Review review, @PathVariable(name = "id") Long id) {
-        reviewService.addReviewToMovie(id, review);
+    @PostMapping("/")
+    public ResponseEntity addReview(@RequestBody Review review) {
+        reviewService.addReviewToMovie(review);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .build();
     }
 
-    @PatchMapping("/review/movie/{id}")
+    @PutMapping("/movie/{id}")
     public ResponseEntity editMovie(@PathVariable(name = "id") Long id, @RequestBody Review review) {
         reviewService.updateReview(id, review);
         return ResponseEntity
@@ -32,7 +33,7 @@ public class ReviewController {
     }
 
     @ResponseBody
-    @GetMapping("/review/movie/{id}")
+    @GetMapping("/movie/{id}")
     public List<Review> findAllByMovieId(@PathVariable(name = "id") Long id) {
         return reviewService.findAllByMovieId(id);
     }

@@ -1,33 +1,30 @@
 package com.cursor.moviesratingandreviewplatform.service.impl;
 
+import com.cursor.moviesratingandreviewplatform.dto.MovieWithReviewDTO;
 import com.cursor.moviesratingandreviewplatform.enums.Category;
 import com.cursor.moviesratingandreviewplatform.exceptions.NotFoundException;
 import com.cursor.moviesratingandreviewplatform.model.Movie;
 import com.cursor.moviesratingandreviewplatform.model.Rate;
 import com.cursor.moviesratingandreviewplatform.repository.MovieRepo;
+import com.cursor.moviesratingandreviewplatform.repository.ReviewRepo;
 import com.cursor.moviesratingandreviewplatform.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
 
-    MovieRepo movieRepo;
+    private final MovieRepo movieRepo;
+    private final ReviewRepo reviewRepo;
 
     @Override
     public void addMovie(Movie movie) {
         movieRepo.save(movie);
-    }
-
-    @Override
-    public Optional<Movie> getMovieById(Long movieId) {
-        return movieRepo.findById(movieId);
     }
 
     @Override
@@ -42,9 +39,9 @@ public class MovieServiceImpl implements MovieService {
         newMovie.setName(updatedMovie.getName());
         newMovie.setCategory(updatedMovie.getCategory());
         newMovie.setDirector(updatedMovie.getDirector());
-        newMovie.setRateValue(updatedMovie.getRateValue());
+        newMovie.setRate(updatedMovie.getRate());
         newMovie.setShortDescription(updatedMovie.getShortDescription());
-        return newMovie;
+        return movieRepo.save(newMovie);
     }
 
     @Override
@@ -63,10 +60,24 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getAllMoviesByRate() {
-        return movieRepo.findAllByRateValue().stream()
-                .sorted(Comparator.comparing(Movie::getRateValue).reversed())
-                .collect(Collectors.toList());
+    public MovieWithReviewDTO getMovieWithReviews(Long movieId) {
+        MovieWithReviewDTO movie = new MovieWithReviewDTO();
+        movie.setMovie(movieRepo.findMovieById(movieId).orElseThrow(NotFoundException::new));
+        movie.setMovieReview(reviewRepo.findAllByMovieId(movieId));
+        return movie;
+    }
+
+    @Override
+    public List<Movie> getAllMoviesByRate(boolean desc) {
+        if (desc) {
+            return movieRepo.findAll().stream()
+                    .sorted(Comparator.comparing(movie -> movie.getRate().getCountOfVotes(), Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
+        } else {
+            return movieRepo.findAll().stream()
+                    .sorted(Comparator.comparing(movie -> movie.getRate().getCountOfVotes()))
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override

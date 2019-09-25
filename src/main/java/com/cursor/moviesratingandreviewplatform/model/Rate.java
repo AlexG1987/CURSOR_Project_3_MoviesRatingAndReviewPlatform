@@ -9,6 +9,6 @@ public class Rate {
     private int countOfVotes;
 
     @Range(min = 1, max = 10)
-    private int rate;
+    private double rate;
 
 }

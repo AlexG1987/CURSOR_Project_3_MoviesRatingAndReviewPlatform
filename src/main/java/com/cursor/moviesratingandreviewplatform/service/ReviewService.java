@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReviewService{
 
-    void addReviewToMovie(Long movieId, Review review);
+    void addReviewToMovie(Review review);
 
     Review updateReview(Long reviewId, Review updatedReview);
 

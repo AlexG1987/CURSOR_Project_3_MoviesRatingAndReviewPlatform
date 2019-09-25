@@ -13,10 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
-    ReviewRepo reviewRepo;
+    private final ReviewRepo reviewRepo;
 
     @Override
-    public void addReviewToMovie(Long movieId, Review review) {
+    public void addReviewToMovie(Review review) {
         reviewRepo.save(review);
     }
 
