@@ -32,7 +32,6 @@ public class ReviewController {
                 .build();
     }
 
-    @ResponseBody
     @GetMapping("/movie/{id}")
     public List<Review> findAllByMovieId(@PathVariable(name = "id") Long id) {
         return reviewService.findAllByMovieId(id);

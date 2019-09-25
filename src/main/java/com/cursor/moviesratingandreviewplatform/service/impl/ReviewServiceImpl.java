@@ -22,16 +22,22 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review updateReview(Long reviewId, Review updatedReview) {
-        Review newReview = new Review();
-        newReview = reviewRepo.findById(reviewId).orElseThrow(NotFoundException::new);
-        newReview.setReviewMessage(updatedReview.getReviewMessage());
-        newReview.setLiked(updatedReview.isLiked());
-        return newReview;
+        if (reviewRepo.existsById(reviewId)) {
+            reviewRepo.deleteById(reviewId);
+            Review newReview = new Review();
+            newReview = reviewRepo.findById(reviewId).orElseThrow(NotFoundException::new);
+            newReview.setReviewMessage(updatedReview.getReviewMessage());
+            newReview.setLiked(updatedReview.isLiked());
+            return reviewRepo.save(newReview);
+        } else {
+            return reviewRepo.save(updatedReview);
+        }
     }
 
-    @Override
-    public List<Review> findAllByMovieId(Long movieId) {
-        return reviewRepo.findAllByMovieId(movieId);
-    }
 
-}
+        @Override
+        public List<Review> findAllByMovieId (Long movieId){
+            return reviewRepo.findAllByMovieId(movieId);
+        }
+
+    }

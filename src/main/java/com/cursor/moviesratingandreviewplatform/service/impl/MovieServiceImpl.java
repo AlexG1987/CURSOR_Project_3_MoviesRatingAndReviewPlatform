@@ -34,14 +34,19 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie updateMovie(Long movieId, Movie updatedMovie) {
-        Movie newMovie = new Movie();
-        newMovie = movieRepo.findMovieById(movieId).orElseThrow(NotFoundException::new);
-        newMovie.setName(updatedMovie.getName());
-        newMovie.setCategory(updatedMovie.getCategory());
-        newMovie.setDirector(updatedMovie.getDirector());
-        newMovie.setRate(updatedMovie.getRate());
-        newMovie.setShortDescription(updatedMovie.getShortDescription());
-        return movieRepo.save(newMovie);
+        if (movieRepo.existsById(movieId)) {
+            movieRepo.deleteById(movieId);
+            Movie newMovie = new Movie();
+            newMovie = movieRepo.findMovieById(movieId).orElseThrow(NotFoundException::new);
+            newMovie.setName(updatedMovie.getName());
+            newMovie.setCategory(updatedMovie.getCategory());
+            newMovie.setDirector(updatedMovie.getDirector());
+            newMovie.setRate(updatedMovie.getRate());
+            newMovie.setShortDescription(updatedMovie.getShortDescription());
+            return movieRepo.save(newMovie);
+        } else {
+            return movieRepo.save(updatedMovie);
+        }
     }
 
     @Override

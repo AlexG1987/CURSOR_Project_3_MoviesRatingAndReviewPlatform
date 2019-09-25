@@ -50,25 +50,21 @@ public class MovieController {
                 .build();
     }
 
-    @ResponseBody
     @GetMapping("/movie/{id}")
     public MovieWithReviewDTO getMovieWithReviews(@PathVariable(name = "id") Long id) {
         return movieService.getMovieWithReviews(id);
     }
 
-    @ResponseBody
     @GetMapping("/movie/all")
     public List<Movie> getAllMovies() {
         return movieService.getAllMovies();
     }
 
-    @ResponseBody
     @GetMapping("/stats/rate/{desc}")
     public List<Movie> getMovieByRating(@PathVariable(name = "desc") boolean desc) {
         return movieService.getAllMoviesByRate(desc);
     }
 
-    @ResponseBody
     @GetMapping("/stats/{category}")
     public List<Movie> getMovieByCategory(@PathVariable(name = "category") Category category) {
         return movieService.getMoviesByCategory(category);
