@@ -60,14 +60,14 @@ public class MovieController {
         return movieService.getAllMovies();
     }
 
-    @GetMapping("/stats/rate/{desc}")
-    public List<Movie> getMovieByRating(@PathVariable(name = "desc") boolean desc) {
-        return movieService.getAllMoviesByRate(desc);
+    @GetMapping("/stats/rate/{descSorting}")
+    public List<Movie> getMovieByRating(@PathVariable(name = "descSorting") boolean descSorting) {
+        return movieService.getAllMoviesByRate(descSorting);
     }
 
     @GetMapping("/stats/{category}")
-    public List<Movie> getMovieByCategory(@PathVariable(name = "category") Category category) {
-        return movieService.getMoviesByCategory(category);
+    public List<Movie> getMovieByCategory(@PathVariable(name = "category") String category) {
+        return movieService.getMoviesByCategory(Category.valueOf(category));
     }
 
 }

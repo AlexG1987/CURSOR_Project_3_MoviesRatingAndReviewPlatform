@@ -24,17 +24,17 @@ public class ReviewController {
                 .build();
     }
 
-    @PutMapping("/movie/{id}")
-    public ResponseEntity editMovie(@PathVariable(name = "id") Long id, @RequestBody Review review) {
-        reviewService.updateReview(id, review);
+    @PutMapping("/{movieId}")
+    public ResponseEntity editMovie(@PathVariable(name = "movieId") Long movieId, @RequestBody Review review) {
+        reviewService.updateReview(movieId, review);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
 
-    @GetMapping("/movie/{id}")
-    public List<Review> findAllByMovieId(@PathVariable(name = "id") Long id) {
-        return reviewService.findAllByMovieId(id);
+    @GetMapping("/{movieId}")
+    public List<Review> findAllByMovieId(@PathVariable(name = "movieId") Long movieId) {
+        return reviewService.findAllByMovieId(movieId);
     }
 
 }

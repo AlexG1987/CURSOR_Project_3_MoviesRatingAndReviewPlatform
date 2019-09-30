@@ -24,23 +24,10 @@ public enum Category {
 
     OTH("Other");
 
-    private String category;
+    private final String label;
 
-    Category(String category) {
-        this.category = category;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public static Category fromString(String text) {
-        for (Category c : Category.values()) {
-            if (c.getCategory().equalsIgnoreCase(text)) {
-                return c;
-            }
-        }
-        return Category.OTH;
+    private Category(String label){
+        this.label = label;
     }
 
 }

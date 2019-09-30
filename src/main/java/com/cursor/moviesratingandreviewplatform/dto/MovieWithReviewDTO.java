@@ -11,6 +11,8 @@ public class MovieWithReviewDTO {
 
     private Movie movie;
 
-    private List<Review> movieReview;
+    private List<Review> reviews;
 
+    public MovieWithReviewDTO(Movie movie, List<Review> reviews) {
+    }
 }
